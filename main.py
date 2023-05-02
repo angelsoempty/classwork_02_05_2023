@@ -1,16 +1,16 @@
-import time
-
-def time_function(func):
-    def wrapper(*args, **kwargs):
-        stat_time = time.time()
-        result = func(*args, **kwargs)
-        end_time = time.time()
-        print('Час виконання функції ', end_time - stat_time)
-        return result
+def decorator_cache(func):
+    cache = {}
+    def wrapper(*args):
+        if args in cache:
+            return cache[args]
+        else:
+            result = func(*args)
+            cache[args] = result
+            return result
     return wrapper
 
-@time_function
-def example_function(x):
-    time.sleep(1)#pass
-    return x
-print(example_function(0.1))
+@decorator_cache
+def fun(x, y):
+    return x * y
+
+print(fun(3,10))
