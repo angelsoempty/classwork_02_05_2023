@@ -1,16 +1,13 @@
-def decorator_cache(func):
-    cache = {}
-    def wrapper(*args):
-        if args in cache:
-            return cache[args]
-        else:
-            result = func(*args)
-            cache[args] = result
-            return result
+def log(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        print(f"Call: {func.__name__}({args}, {kwargs}) -> {result}")
+        return result
     return wrapper
 
-@decorator_cache
-def fun(x, y):
-    return x * y
+@log
+def my_function(x, y):
+    return x + y
 
-print(fun(3,10))
+my_function(5, 3)
+my_function(2, 7)
